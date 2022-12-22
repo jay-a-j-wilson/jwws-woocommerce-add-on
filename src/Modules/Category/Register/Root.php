@@ -17,6 +17,7 @@ class Root {
         add_action(
             'manage_posts_columns',
             [__CLASS__, 'register'],
+            1,
         );
     }
 
@@ -42,7 +43,7 @@ class Root {
      */
     public function register_columns(): array {
         $this->columns['my-column'] = __(
-            text: 'My Column',
+            text: 'Categories (Hierarchy)',
             domain: 'jwws',
         );
 

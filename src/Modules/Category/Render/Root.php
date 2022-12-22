@@ -57,31 +57,35 @@ class Root {
         }
 
         foreach ($categories as $category) {
-            $ancestors = get_ancestors(
+            unset($all_categories); // reset array
+
+            $ancestor_ids = get_ancestors(
                 object_id: $category->term_id,
                 object_type: $category->taxonomy,
             );
 
-            if ($ancestors) {
-                foreach ($ancestors as $ancestor) {
-                    $ancestor_categories[] = get_term($ancestor)->name;
-                }
-
-                $all_categories = array_reverse($ancestor_categories);
+            if ($ancestor_ids) {
+                $all_categories = $this->get_ancestor_names($ancestor_ids);
             }
             
             $all_categories[] = $category->name;
 
-            $output = implode(array: $all_categories, separator: ' > ');
-
-            $x[] = $output;
-
-            // console_log();
-            //echo $category->name;
+            $output[] = implode(array: $all_categories, separator: ' <span style="color: #999">&raquo;</span> ');
         }
 
-        console_log($output);
+        echo implode(array: $output, separator: '<br><br>');
+    }
 
-        echo implode(array: $x, separator: ',<br>');
+    /**
+     * @param array $ancestor_ids 
+     * 
+     * @return array 
+     */
+    private function get_ancestor_names(array $ancestor_ids): array {
+        foreach ($ancestor_ids as $ancestor_id) {
+            $ancestor_names[] = '<span style="color: #999">' . get_term(term: $ancestor_id)->name . '</span>';
+        }
+
+        return array_reverse($ancestor_names);
     }
 }
