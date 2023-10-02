@@ -1,0 +1,34 @@
+<?php
+/**
+ * @license proprietary?
+ *
+ * Modified by __root__ on 02-October-2023 using Strauss.
+ * @see https://github.com/BrianHenryIE/strauss
+ */ declare(strict_types=1);
+
+namespace JWWS\WCA\Deps\JWWS\WPPF\Collection\Standard_Collection\Tests\Unit\Countable;
+
+use JWWS\WCA\Deps\JWWS\WPPF\Collection\Standard_Collection\Tests\Unit\Fixtures\Collection_Factory;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @covers \JWWS\WCA\Deps\JWWS\WPPF\Collection\Standard_Collection\Standard_Collection
+ *
+ * @internal
+ *
+ * @small
+ */
+final class Count extends TestCase {
+    /**
+     * @test
+     *
+     * ? Possibly integration test.
+     */
+    public function pass(): void {
+        $sut = Collection_Factory::create_and_get();
+
+        self::assertSame(expected: 5, actual: $sut->count());
+        $sut->add(items: 'six');
+        self::assertSame(expected: 6, actual: $sut->count());
+    }
+}

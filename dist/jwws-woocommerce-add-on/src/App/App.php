@@ -1,0 +1,47 @@
+<?php declare(strict_types=1);
+
+namespace JWWS\WCA\App;
+
+use JWWS\WCA\App\Collabs\Modules\Modules;
+use JWWS\WCA\Deps\JWWS\WPPF\Loader\Loader;
+use YITH_COG_Admin_Premium;
+
+if (! defined(constant_name: 'ABSPATH')) {
+    exit; // Exit if accessed directly.
+}
+
+final class App {
+    /**
+     * Factory method.
+     */
+    public static function of(Loader $loader): self {
+        return new self(loader: $loader);
+    }
+
+    /**
+     * @return void
+     */
+    private function __construct(private readonly Loader $loader) {}
+
+    /**
+     * Hooks into WordPress.
+     */
+    public function hook(): void {
+        add_action('wp_loaded', [$this, 'hook_loader']);
+
+        if ($this->loader->can_activate()) {
+            add_action(
+                'wp_loaded',
+                [$this, 'hook_modules'],
+            );
+        }
+    }
+
+    public function hook_loader(): void {
+        $this->loader->hook();
+    }
+
+    public function hook_modules(): void {
+        Modules::new_instance()->hook();
+    }
+}

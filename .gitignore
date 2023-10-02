@@ -1,3 +1,16 @@
+# Mac OS
 .DS_Store
-/vendor
-/bin
+
+# PhpStorm
+/.idea
+/dist/jwws-woocommerce-add-on/.idea
+
+# Project
+/data
+
+# Composer
+/dist/jwws-woocommerce-add-on/composer.lock
+/dist/jwws-woocommerce-add-on/vendor
+
+#App
+/dist/jwws-woocommerce-add-on/src/Deps
